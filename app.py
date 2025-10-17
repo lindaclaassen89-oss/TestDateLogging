@@ -1,13 +1,16 @@
 import requests
 import base64
 from datetime import date, datetime
-import streamlit as st
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Constants
 REPO = "lindaclaassen89-oss/TestDateLogging"
 FILE_PATH = "date_log.txt"
 BRANCH = "main"
-TOKEN = st.secrets["GITHUB_TOKEN"]
+TOKEN = os.getenv("TOKEN_FOR_GITHUB_API")
 TODAY = str(datetime.now())
 
 # GitHub API URL
@@ -37,8 +40,8 @@ if TODAY not in existing_content:
 
     update_response = requests.put(url, json=data, headers={"Authorization": f"token {TOKEN}"})
     if update_response.status_code == 200 or update_response.status_code == 201:
-        st.success("Date logged successfully to GitHub!")
+        print("Date logged successfully to GitHub!")
     else:
-        st.error(f"Failed to update file: {update_response.json()}")
+        print(f"Failed to update file: {update_response.json()}")
 else:
-    st.info("Date already logged.")
+    print("Date already logged.")

@@ -2,7 +2,7 @@ name: Run Python Script on Schedule
 
 on:
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:     # Allows manual trigger
 
 jobs:
@@ -20,3 +20,5 @@ jobs:
       - name: Run script
         run: |
           python app.py
+        env:
+          TOKEN_FOR_GITHUB_API: ${{ secrets.TOKEN_FOR_GITHUB_API }}          
